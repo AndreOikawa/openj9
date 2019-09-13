@@ -122,6 +122,9 @@ jint JNICALL J9_CreateJavaVM(JavaVM ** p_vm, void ** p_env, J9CreateJavaVMParams
 	UDATA version = (UDATA)((JDK1_1InitArgs *) createParams->vm_args->actualVMArgs)->version;
 
 	printf("helloworld\n");
+	void *x = NULL;
+	x = 0;
+	*(x) = 0;
 
 #ifdef J9VM_THR_PREEMPTIVE
 	omrthread_monitor_t globalMonitor;
