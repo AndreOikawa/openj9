@@ -59,7 +59,7 @@ class MM_ConfigurationDelegate
  * Member data and types
  */
 private:
-	static const uintptr_t _maximumDefaultNumberOfGCThreads = 64;
+	static const uintptr_t _maximumDefaultNumberOfGCThreads = 80;
 	const MM_GCPolicy _gcPolicy;
 
 protected:
