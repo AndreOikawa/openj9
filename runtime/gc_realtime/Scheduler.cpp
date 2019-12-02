@@ -92,7 +92,7 @@ MM_Scheduler::tearDown(MM_EnvironmentBase *env)
 	if (NULL != _utilTracker) {
 		_utilTracker->kill(env);
 	}
-	MM_ParallelDispatcher::kill(env);
+	MM_Dispatcher::kill(env);
 }
 
 uintptr_t
@@ -180,7 +180,7 @@ MM_Scheduler::initializeForVirtualSTW(MM_GCExtensionsBase *ext)
 bool
 MM_Scheduler::initialize(MM_EnvironmentBase *env)
 {
-	if (!MM_ParallelDispatcher::initialize(env)) {
+	if (!MM_Dispatcher::initialize(env)) {
 		return false;
 	}
 
@@ -724,7 +724,7 @@ void MM_Scheduler::yieldFromGC(MM_EnvironmentRealtime *env, bool distanceChecked
 void
 MM_Scheduler::prepareThreadsForTask(MM_EnvironmentBase *env, MM_Task *task, uintptr_t threadCount)
 {
-	MM_ParallelDispatcher::prepareThreadsForTask(env, task, threadCount);
+	MM_Dispatcher::prepareThreadsForTask(env, task, threadCount);
 	pushYieldCollaborator(((MM_IncrementalParallelTask *)task)->getYieldCollaborator());
 }
 
@@ -734,7 +734,7 @@ MM_Scheduler::completeTask(MM_EnvironmentBase *env)
 	if (env->isMasterThread()) {
 		popYieldCollaborator();
 	}
-	MM_ParallelDispatcher::completeTask(env);
+	MM_Dispatcher::completeTask(env);
 }
 
 bool
@@ -749,7 +749,7 @@ MM_Scheduler::startUpThreads()
 	}
 
 	/* Start up the GC threads */
-	if (!MM_ParallelDispatcher::startUpThreads()) {
+	if (!MM_Dispatcher::startUpThreads()) {
 		return false;
 	}
 
@@ -777,7 +777,7 @@ MM_Scheduler::startUpThreads()
 }
 
 /**
- * @copydoc MM_ParallelDispatcher::recomputeActiveThreadCount()
+ * @copydoc MM_Dispatcher::recomputeActiveThreadCount()
  * This function is called at the start of a complete GC cycle to calculate the number of
  * GC threads to use for the cycle.
  */
@@ -788,7 +788,7 @@ MM_Scheduler::recomputeActiveThreadCount(MM_EnvironmentBase *env)
 }
 
 /**
- * @copydoc MM_ParallelDispatcher::getThreadPriority()
+ * @copydoc MM_Dispatcher::getThreadPriority()
  */
 uintptr_t
 MM_Scheduler::getThreadPriority()
@@ -833,7 +833,7 @@ MM_Scheduler::slaveEntryPoint(MM_EnvironmentBase *envModron)
 }
 
 /**
- * @copydoc MM_ParallelDispatcher::masterEntryPoint()
+ * @copydoc MM_Dispatcher::masterEntryPoint()
  */
 void
 MM_Scheduler::masterEntryPoint(MM_EnvironmentBase *envModron)
@@ -892,7 +892,7 @@ MM_Scheduler::completeCurrentGCSynchronously(MM_EnvironmentRealtime *env)
 }
 
 /**
- * @copydoc MM_ParallelDispatcher::wakeUpThreads()
+ * @copydoc MM_Dispatcher::wakeUpThreads()
  */
 void
 MM_Scheduler::wakeUpThreads(uintptr_t count)
@@ -922,7 +922,7 @@ MM_Scheduler::wakeUpSlaveThreads(uintptr_t count)
 }
 
 /**
- * @copydoc MM_ParallelDispatcher::shutDownThreads()
+ * @copydoc MM_Dispatcher::shutDownThreads()
  */
 void
 MM_Scheduler::shutDownThreads()

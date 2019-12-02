@@ -55,7 +55,7 @@ class MM_UtilizationTracker;
  * @todo Provide class documentation
  * @ingroup GC_Metronome
  */
-class MM_Scheduler : public MM_ParallelDispatcher
+class MM_Scheduler : public MM_Dispatcher
 {
 	/*
 	 * Data members
@@ -137,13 +137,13 @@ private:
 
 protected:
 	/**
-	 * Overrides of functionality in MM_ParallelDispatcher
+	 * Overrides of functionality in MM_Dispatcher
 	 * @{
 	 */
 	virtual uintptr_t getThreadPriority();
 
 	/**
-	 * @copydoc MM_ParallelDispatcher::useSeparateMasterThread()
+	 * @copydoc MM_Dispatcher::useSeparateMasterThread()
 	 * Because Metronome requires all GC threads to begin an increment
 	 * at the same location where they left off, it uses a separate
 	 * thread as the GC master thread, instead of using one of the
@@ -240,7 +240,7 @@ public:
 	void collectorInitialized(MM_RealtimeGC *gc);
 
 	MM_Scheduler(MM_EnvironmentBase *env, omrsig_handler_fn handler, void* handler_arg, uintptr_t defaultOSStackSize) :
-		MM_ParallelDispatcher(env, handler, handler_arg, defaultOSStackSize),
+		MM_Dispatcher(env, handler, handler_arg, defaultOSStackSize),
 		_mutatorStartTimeInNanos(J9CONST64(0)),
 		_incrementStartTimeInNanos(J9CONST64(0)),
 		_gcCode(J9MMCONSTANT_IMPLICIT_GC_DEFAULT),
